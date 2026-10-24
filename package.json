@@ -1,0 +1,13 @@
+{
+  "name": "rarityscope",
+  "version": "0.1.0",
+  "description": "Zero-dependency CLI that ranks NFT collections by trait rarity from their metadata.",
+  "type": "module",
+  "bin": { "rarityscope": "bin/rarityscope.js" },
+  "main": "src/rarity.js",
+  "scripts": { "test": "node --test test/rarity.test.js" },
+  "engines": { "node": ">=18" },
+  "keywords": ["nft", "rarity", "erc721", "metadata", "cli", "web3"],
+  "author": "Unikii (https://github.com/DaddyUnikii)",
+  "license": "MIT"
+}
