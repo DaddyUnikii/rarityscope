@@ -55,6 +55,9 @@ node bin/rarityscope.js ./metadata --traits
 
 # JSON for scripts
 node bin/rarityscope.js ./metadata --top 3 --json
+
+# print the version
+node bin/rarityscope.js --version
 ```
 
 Or install globally: `npm i -g .` then run `rarityscope <source>`.
