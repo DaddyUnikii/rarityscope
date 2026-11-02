@@ -2,6 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { normalize, rank, tier } from '../src/rarity.js';
 import { load } from '../src/load.js';
+import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 
 const mk = (id, attrs) => normalize({ name: `T #${id}`, attributes: Object.entries(attrs).map(([trait_type, value]) => ({ trait_type, value })) });
 
@@ -33,4 +35,10 @@ test('example collection: #42 is the rarest', async () => {
   const res = rank(await load(new URL('../examples/metadata', import.meta.url).pathname));
   assert.equal(res.tokens.length, 100);
   assert.equal(res.tokens[0].id, '42');
+});
+
+test('--version prints the package version', () => {
+  const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+  const bin = new URL('../bin/rarityscope.js', import.meta.url).pathname;
+  for (const flag of ['--version', '-v']) assert.equal(execFileSync(process.execPath, [bin, flag], { encoding: 'utf8' }).trim(), pkg.version);
 });

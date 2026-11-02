@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 import { load } from '../src/load.js';
 import { rank, tier } from '../src/rarity.js';
+import { readFileSync } from 'node:fs';
+
+const VERSION = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).version;
 
 const HELP = `rarityscope — rank an NFT collection by trait rarity
 
@@ -17,10 +20,12 @@ Options:
   --json           machine-readable output
   --no-missing     do not score missing traits as "(none)"
   --no-count       do not score the number of traits
+  -v, --version    print the version
   -h, --help       show this help
 `;
 
 const argv = process.argv.slice(2);
+if (argv.includes('-v') || argv.includes('--version')) { process.stdout.write(VERSION + '\n'); process.exit(0); }
 if (!argv.length || argv.includes('-h') || argv.includes('--help')) { process.stdout.write(HELP); process.exit(0); }
 const opt = (name, def) => { const i = argv.indexOf(name); return i >= 0 ? argv[i + 1] : def; };
 const source = argv.find((a, i) => !a.startsWith('-') && !['--top', '--id'].includes(argv[i - 1]));
